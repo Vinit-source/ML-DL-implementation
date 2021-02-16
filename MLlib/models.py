@@ -692,6 +692,9 @@ class KMeansClustering():
             print(cluster)
             print("\n==============================\n")
 
+# ------------------------Agglomerative Hierarchical Clustering----------------
+# class AgglomerativeClustering():
+
 # ---------------------- Principle Component Analysis ------------------------
 
 
