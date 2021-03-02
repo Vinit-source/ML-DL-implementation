@@ -242,7 +242,7 @@ def cluster_allot(M, centroid):
     """
     cluster_array = []
     for point in centroid:
-        cluster_array.append([point])
+        cluster_array.append([])
     for poin in M:
         dista = []
         for c in centroid:

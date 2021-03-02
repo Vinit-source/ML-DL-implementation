@@ -603,7 +603,7 @@ class MultinomialNB(object):
     def predict(self, x):
         return np.argmax(self.predict_log(x), axis=1)
 
-
+import matplotlib.pyplot as plt 
 class KMeansClustering():
     """
     One of the models used for Unsupervised
@@ -624,7 +624,7 @@ class KMeansClustering():
         number of epoch steps.
     """
 
-    def work(self, M, num_cluster, epochs):
+    def work(self, M, num_cluster, epochs, print_flag=True):
         """
         Show the arrangement of clusters after
         certain  number of epochs, provided with
@@ -681,17 +681,35 @@ class KMeansClustering():
 
         None
         """
-        centroid_array = initi_centroid(M, num_cluster)
+        self.centroid_array = initi_centroid(M, num_cluster)
         for i in range(1, epochs + 1):
-            interm = xy_calc(M, centroid_array)
+            interm = xy_calc(M, self.centroid_array)
             new_array = new_centroid(interm)
-            centroid_array = new_array
-        cluster_array = cluster_allot(M, centroid_array)
-        for cluster in cluster_array:
-            print("==============================\n")
-            print(cluster)
-            print("\n==============================\n")
+            self.centroid_array = new_array
+        self.cluster_array = cluster_allot(M, self.centroid_array)
+        if print_flag:
+            for cluster in self.cluster_array:
+                print("==============================\n")
+                print(cluster)
+                print("\n==============================\n")
 
+    def run(self, M, epochs):
+        self.work(M, 2, epochs, print_flag=False)
+        while len(self.cluster_array[0]) == 0 or len(self.cluster_array[1]) == 0:
+            self.work(M, 2, epochs, print_flag=False)  
+        # self.cluster_array[0][0] = np.array(self.cluster_array[0][0])
+        # self.cluster_array[1][0] = np.array(self.cluster_array[1][0])
+        # self.centroid_array = np.array(self.centroid_array)
+        # self.cluster_array = np.ndarray(, buffer=self.cluster_array)
+        cluster_array = [np.empty((0,2)), np.empty((0, 2))] 
+        for i, cluster in enumerate(self.cluster_array):
+            for point in cluster:
+               cluster_array[i] = np.append(cluster_array[i], point.reshape(1,2), axis=0)  
+
+        # print(f'cluster_array: {cluster_array}')
+        print(f'cluster_array[0].shape: {cluster_array[0].shape}\ncluster_array[1].shape: {cluster_array[1].shape}')
+        self.cluster_array = cluster_array
+        return self.cluster_array, self.centroid_array
 # ------------------------Agglomerative Hierarchical Clustering----------------
 # class AgglomerativeClustering():
 
