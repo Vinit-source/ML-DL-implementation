@@ -133,7 +133,6 @@ def new_centroid(lis):
         new.append([newx, newy])
     return new
 
-
 def xy_calc(M, centroid):
     """
     With each epoch, collects the

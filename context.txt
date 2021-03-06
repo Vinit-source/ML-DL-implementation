@@ -1,2 +1,2 @@
 Issues remaining to solve:
-- Dendrogram construction.
+- Dendrogram correct construction.
